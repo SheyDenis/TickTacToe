@@ -63,8 +63,8 @@ bool MainWindow::newGame(){
 
 void MainWindow::gameOver(TileButton::TileSymbol winner){
 	this->scoreBoard->incrementScore(winner);
-	this->changeTurn();
-	this->board->resetBoard(this->turn);
+//	this->changeTurn();
+//	this->board->resetBoard(this->turn);
 //	this->newGame();
 }
 
