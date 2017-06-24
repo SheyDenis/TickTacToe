@@ -24,6 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    tilebutton.cpp \
+    tileboard.cpp \
+    scoreboard.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    tilebutton.h \
+    tileboard.h \
+    scoreboard.h
