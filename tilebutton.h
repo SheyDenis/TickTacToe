@@ -1,10 +1,13 @@
 #ifndef TILEBUTTON_H
 #define TILEBUTTON_H
 
+#if DEBUG_FLAG
+#include <QDebug>
+#endif
+
 #include <QObject>
 #include <QPushButton>
 #include <QFont>
-#include <QDebug>
 
 class TileButton : public QPushButton{
 	Q_OBJECT

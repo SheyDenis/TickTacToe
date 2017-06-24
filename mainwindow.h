@@ -1,13 +1,20 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#ifndef DEBUG_FLAG
+#define DEBUG_FLAG 0
+#endif
+
+#if DEBUG_FLAG
+#include <QDebug>
+#endif
+
 #include <QMainWindow>
 #include "tileboard.h"
 #include <QMenuBar>
 #include <QMenu>
 #include <QStatusBar>
 #include <QAction>
-#include <QDebug>
 #include <QDockWidget>
 #include "scoreboard.h"
 

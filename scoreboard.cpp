@@ -40,7 +40,9 @@ int ScoreBoard::getScore(TileButton::TileSymbol symbol){
 		case TileButton::TileSymbol::O:
 			return this->oScore;
 		default:
+#if DEBUG_FLAG
 			qDebug() << "Requested score of neither X or O.";
+#endif
 			return -1;
 	}
 }
@@ -57,7 +59,9 @@ int ScoreBoard::incrementScore(TileButton::TileSymbol symbol){
 			this->redrawScores();
 			return (this->oScore - 1);
 		default:
+#if DEBUG_FLAG
 			qDebug() << "Requested to increment score of neither X or O.";
+#endif
 			return -1;
 	}
 }

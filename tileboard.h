@@ -4,12 +4,15 @@
 #define NUM_OF_ROWS 3
 #define NUM_OF_COLS 3
 
+#if DEBUG_FLAG
+#include <QDebug>
+#endif
+
 #include <QWidget>
 #include "tilebutton.h"
 #include <QResizeEvent>
 #include <QGridLayout>
 #include <QSizePolicy>
-#include <QDebug>
 
 class TileBoard : public QWidget{
 	Q_OBJECT

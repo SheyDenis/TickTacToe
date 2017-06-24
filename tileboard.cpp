@@ -32,7 +32,9 @@ bool TileBoard::resetBoard(TileButton::TileSymbol beginner){
 		for(int col = 0; col < NUM_OF_COLS; col++){
 			fail = !this->tiles[row][col]->resetTile();
 			if(fail){
+#if DEBUG_FLAG
 				qDebug() << "Failed to reset tile: " << row << "," << col;
+#endif
 				return false;
 			}
 		}
@@ -129,13 +131,17 @@ bool TileBoard::tileClicked(TileButton::TilePosition position){
 		bool over = checkGameOver();
 
 		if(over){
+#if DEBUG_FLAG
 			qDebug() << "Game over.";
+#endif
 			this->isGameOver = true;
 			emit gameOver(this->turn);
 		}else{
 			bool full = checkBoardFull();
 			if(full){
+#if DEBUG_FLAG
 				qDebug() << "Game tie.";
+#endif
 				this->isGameOver = true;
 				emit gameTie();
 			}else{
@@ -147,7 +153,9 @@ bool TileBoard::tileClicked(TileButton::TilePosition position){
 						this->turn = TileButton::TileSymbol::X;
 						break;
 					default:
+#if DEBUG_FLAG
 						qDebug() << "Current turn is set to neither X or O.";
+#endif
 						break;
 				}
 			}

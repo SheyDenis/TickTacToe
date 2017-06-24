@@ -1,11 +1,14 @@
 #ifndef SCOREBOARD_H
 #define SCOREBOARD_H
 
+#if DEBUG_FLAG
+#include <QDebug>
+#endif
+
 #include <QWidget>
 #include <QBoxLayout>
 #include <QLabel>
 #include "tilebutton.h"
-#include <QDebug>
 #include <QString>
 #include <QFont>
 

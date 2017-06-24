@@ -40,7 +40,9 @@ TileButton::TileSymbol MainWindow::changeTurn(){
 			this->turn = TileButton::TileSymbol::X;
 			break;
 		default:
+#if DEBUG_FLAG
 			qDebug() << "Current turn is set to neither X or O.";
+#endif
 			break;
 	}
 
