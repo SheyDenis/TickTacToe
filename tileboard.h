@@ -19,10 +19,13 @@ class TileBoard : public QWidget{
 public:
 	explicit TileBoard(QWidget *parent = 0);
 
-	bool getIsGameOver() const;
-	void setIsGameOver(bool value);
+	bool getIsGameOver();
+//	void setIsGameOver(bool value);
 	bool resetBoard(TileButton::TileSymbol beginner);
 	TileButton::TileSymbol getCurrentTurn();
+	bool toggleOClicks(bool toggle);
+	bool getOClicks();
+	TileButton::TileSymbol** getCurrentState();
 
 protected:
 	TileButton *tiles[3][3];
@@ -33,14 +36,19 @@ private:
 	bool isGameOver;
 	bool checkGameOver();
 	bool checkBoardFull();
+	bool OClicks;
+	bool selectTile(TileButton::TilePosition position);
 
 signals:
 	void resized(const QSize *newSize);
 	void gameOver(TileButton::TileSymbol winner);
 	void gameTie();
+	void nextTurn();
 
 public slots:
 	bool tileClicked(TileButton::TilePosition position);
+	bool tileSelected(TileButton::TilePosition position);
+
 
 };
 

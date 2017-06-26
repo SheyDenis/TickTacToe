@@ -17,6 +17,8 @@
 #include <QAction>
 #include <QDockWidget>
 #include "scoreboard.h"
+#include "opponent.h"
+#include "opponentrandom.h"
 
 class MainWindow : public QMainWindow{
 	Q_OBJECT
@@ -32,6 +34,10 @@ private:
 	TileBoard *board;
 	TileButton::TileSymbol turn;
 	ScoreBoard *scoreBoard;
+	bool opponentHuman;
+	QMenu *opponentMenu;
+	Opponent *opponent;
+	bool opponentWorking;
 
 
 public slots:
@@ -42,6 +48,9 @@ private slots:
 	void gameOver(TileButton::TileSymbol winner);
 	void resetScore();
 	TileButton::TileSymbol newTurn();
+	bool setOpponentHuman();
+	bool setOpponentRandom();
+	bool nextTurn();
 };
 
 #endif // MAINWINDOW_H

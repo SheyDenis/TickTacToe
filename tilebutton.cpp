@@ -56,3 +56,43 @@ bool TileButton::resetTile(){
 	this->setText("");
 	return true;
 }
+
+TileButton::TilePosition TileButton::intToTilePosition(int n){
+	TileButton::TilePosition tmpPos;
+	switch(n){
+		case 0:
+			tmpPos = TileButton::TilePosition::TopLeft;
+			break;
+		case 1:
+			tmpPos = TileButton::TilePosition::TopMiddle;
+			break;
+		case 2:
+			tmpPos = TileButton::TilePosition::TopRight;
+			break;
+		case 3:
+			tmpPos = TileButton::TilePosition::MiddleLeft;
+			break;
+		case 4:
+			tmpPos = TileButton::TilePosition::MiddleMiddle;
+			break;
+		case 5:
+			tmpPos = TileButton::TilePosition::MiddleRight;
+			break;
+		case 6:
+			tmpPos = TileButton::TilePosition::BottomLeft;
+			break;
+		case 7:
+			tmpPos = TileButton::TilePosition::BottmMiddle;
+			break;
+		case 8:
+			tmpPos = TileButton::TilePosition::BottomRight;
+			break;
+		default:
+#if DEBUG_FLAG
+				qDebug() << "Requested conversion from invalid number to TilePosition";
+#endif
+			throw std::invalid_argument("Requested conversion from invalid number to TilePosition");
+	}
+
+	return tmpPos;
+}

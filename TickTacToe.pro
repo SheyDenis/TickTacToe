@@ -27,9 +27,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tilebutton.cpp \
     tileboard.cpp \
-    scoreboard.cpp
+    scoreboard.cpp \
+    opponent.cpp \
+    opponentrandom.cpp
 
 HEADERS  += mainwindow.h \
     tilebutton.h \
     tileboard.h \
-    scoreboard.h
+    scoreboard.h \
+    opponent.h \
+    opponentrandom.h

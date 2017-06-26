@@ -37,6 +37,8 @@ public:
 	TileButton::TileSymbol getSymbol();
 	bool resetTile();
 
+	static TileButton::TilePosition intToTilePosition(int n);
+
 private:
 	TilePosition tilePos;
 	TileSymbol tileSymbol;

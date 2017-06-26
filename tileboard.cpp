@@ -22,6 +22,7 @@ TileBoard::TileBoard(QWidget *parent) : QWidget(parent){
 
 	this->turn = TileButton::TileSymbol::X;
 	this->isGameOver = false;
+	this->OClicks = false;
 
 }
 
@@ -119,6 +120,24 @@ bool TileBoard::checkBoardFull(){
 }
 
 bool TileBoard::tileClicked(TileButton::TilePosition position){
+	if(this->turn == TileButton::TileSymbol::O && !this->OClicks){
+		return false;
+	}
+
+	bool success = this->selectTile(position);
+	return success;
+}
+
+bool TileBoard::toggleOClicks(bool toggle){
+	this->OClicks = toggle;
+	return true;
+}
+
+bool TileBoard::getOClicks(){
+	return this->OClicks;
+}
+
+bool TileBoard::selectTile(TileButton::TilePosition position){
 	if(this->isGameOver){
 		return false;
 	}
@@ -162,5 +181,31 @@ bool TileBoard::tileClicked(TileButton::TilePosition position){
 		}
 
 	}
+
+	emit nextTurn();
+	return true;
+}
+
+bool TileBoard::tileSelected(TileButton::TilePosition position){
+	bool success = this->selectTile(position);
 	return success;
+}
+
+TileButton::TileSymbol** TileBoard::getCurrentState(){
+
+	TileButton::TileSymbol** currentState = new TileButton::TileSymbol*[NUM_OF_ROWS];
+	for(int row = 0; row < NUM_OF_ROWS; row++){
+
+		currentState[row] = new TileButton::TileSymbol[NUM_OF_COLS];
+		for(int col = 0; col < NUM_OF_COLS; col++){
+			currentState[row][col] = this->tiles[row][col]->getSymbol();
+		}
+	}
+
+	return currentState;
+
+}
+
+bool TileBoard::getIsGameOver(){
+	return this->isGameOver;
 }
