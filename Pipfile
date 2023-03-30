@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+
+[dev-packages]
+conan = "*"
+isort = "*"
+mypy = "*"
+pre-commit = "*"
+pylint = "*"
+xenon = "*"
+yapf = "*"
+
+[requires]
+python_version = "3.8"
