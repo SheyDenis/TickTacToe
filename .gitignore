@@ -1,0 +1,14 @@
+# Build
+.build/
+CMakeUserPresets.json
+build/
+cmake-build-*/
+
+# IDE
+!.vscode/
+
+# Misc
+!.github/
+
+# Python
+.venv/

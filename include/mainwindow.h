@@ -17,8 +17,8 @@
 #include <QAction>
 #include <QDockWidget>
 #include "scoreboard.h"
-#include "opponent.h"
-#include "opponentrandom.h"
+#include "opponent/opponent.h"
+#include "opponent/opponentrandom.h"
 
 class MainWindow : public QMainWindow{
 	Q_OBJECT

@@ -1,4 +1,5 @@
 #include "tilebutton.h"
+#include "moc_tilebutton.cpp"
 
 TileButton::TileButton(TilePosition position, QWidget *parent) : QPushButton(parent){
 	this->tilePos = position;

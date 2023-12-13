@@ -1,4 +1,5 @@
 #include "tileboard.h"
+#include "moc_tileboard.cpp"
 
 TileBoard::TileBoard(QWidget *parent) : QWidget(parent){
 	QGridLayout *l = new QGridLayout;

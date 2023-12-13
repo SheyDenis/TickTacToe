@@ -1,0 +1,41 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
+
+PROJECT(TickTacToe VERSION 0.0.1 LANGUAGES CXX)
+SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+INCLUDE(GNUInstallDirs)
+
+
+SET(EXEC_NAME ${PROJECT_NAME})
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/build/build/${CMAKE_BUILD_TYPE}/generators;${CMAKE_MODULE_PATH})
+
+FIND_PACKAGE(Qt5 5.15 REQUIRED COMPONENTS Widgets)
+
+SET(CMAKE_AUTOMOC ON)
+
+ADD_EXECUTABLE(${EXEC_NAME}
+        src/main.cpp
+        src/mainwindow.cpp
+        src/opponent/opponent.cpp
+        src/opponent/opponentrandom.cpp
+        src/scoreboard.cpp
+        src/tileboard.cpp
+        src/tilebutton.cpp
+)
+
+TARGET_INCLUDE_DIRECTORIES(${EXEC_NAME}
+        PUBLIC
+        ${PROJECT_SOURCE_DIR}/include
+)
+
+TARGET_LINK_DIRECTORIES(${EXEC_NAME}
+        PUBLIC
+)
+
+TARGET_LINK_LIBRARIES(${EXEC_NAME}
+        PUBLIC
+        Qt5::Widgets
+)
+
+SET_TARGET_PROPERTIES(${EXEC_NAME} PROPERTIES AUTOGEN_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/autogen)
