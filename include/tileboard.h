@@ -37,7 +37,7 @@ protected:
 public:
   explicit TileBoard(QWidget* parent = nullptr);
 
-  [[nodiscard]]bool getIsGameOver()const;
+  [[nodiscard]] bool getIsGameOver() const;
   bool resetBoard(TileButton::TileSymbol beginner);
   TileButton::TileSymbol getCurrentTurn();
   bool toggleOClicks(bool toggle);
