@@ -6,7 +6,7 @@
 #endif
 
 #include <QList>
-#include "opponent.h"
+#include "opponent/opponent.h"
 #include "tileboard.h"
 
 class OpponentRandom : public Opponent{

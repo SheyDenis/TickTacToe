@@ -1,4 +1,5 @@
 #include "scoreboard.h"
+#include "moc_scoreboard.cpp"
 
 ScoreBoard::ScoreBoard(QWidget *parent) : QWidget(parent){
 	this->xScoreLbl = new QLabel("", this);

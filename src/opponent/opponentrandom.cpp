@@ -1,4 +1,4 @@
-#include "opponentrandom.h"
+#include "opponent/opponentrandom.h"
 
 OpponentRandom::OpponentRandom(QString name, TileButton::TileSymbol turn): Opponent(name, turn){
 

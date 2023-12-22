@@ -1,4 +1,4 @@
-#include "opponent.h"
+#include "opponent/opponent.h"
 
 Opponent::Opponent(QString name, TileButton::TileSymbol turn){
 	this->opponentName = name;
