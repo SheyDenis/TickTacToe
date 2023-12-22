@@ -1,20 +1,23 @@
-#ifndef OPPONENTRANDOM_H
-#define OPPONENTRANDOM_H
+#ifndef OPPONENTRANDOM_H_
+#define OPPONENTRANDOM_H_
 
 #if DEBUG_FLAG
 #include <QDebug>
 #endif
 
-#include <QList>
 #include "opponent/opponent.h"
 #include "tileboard.h"
+#include <QList>
 
-class OpponentRandom : public Opponent{
+namespace ticktactoe {
 
+class OpponentRandom : public Opponent {
 public:
-	OpponentRandom(QString name, TileButton::TileSymbol turn = TileButton::TileSymbol::O);
-	virtual TileButton::TilePosition makeTurn(TileButton::TileSymbol** currentState);
+  explicit OpponentRandom(QString name, TileButton::TileSymbol turn = TileButton::TileSymbol::O);
 
+  TileButton::TilePosition makeTurn(TileButton::TileSymbol** currentState) override;
 };
 
-#endif // OPPONENTRANDOM_H
+} // namespace ticktactoe
+
+#endif

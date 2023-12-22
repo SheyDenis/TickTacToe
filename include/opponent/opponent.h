@@ -1,26 +1,29 @@
-#ifndef OPPONENT_H
-#define OPPONENT_H
+#ifndef OPPONENT_H_
+#define OPPONENT_H_
 
 #if DEBUG_FLAG
 #include <QDebug>
 #endif
 
-#include <QString>
-#include "tilebutton.h"
 #include "tileboard.h"
+#include "tilebutton.h"
+#include <QString>
 
-class Opponent{
+namespace ticktactoe {
+
+class Opponent {
+protected:
+  QString const opponentName;
+  TileButton::TileSymbol turn;
 
 public:
-	Opponent(QString name, TileButton::TileSymbol turn = TileButton::TileSymbol::O);
-	virtual QString getName();
-	virtual TileButton::TileSymbol getTurn();
-	virtual TileButton::TilePosition makeTurn(TileButton::TileSymbol** currentState) = 0;
+  explicit Opponent(QString name, TileButton::TileSymbol turn = TileButton::TileSymbol::O);
 
-protected:
-	QString opponentName;
-	TileButton::TileSymbol turn;
-
+  [[nodiscard]] virtual QString const& getName() const;
+  [[nodiscard]] virtual TileButton::TileSymbol getTurn() const;
+  virtual TileButton::TilePosition makeTurn(TileButton::TileSymbol** currentState) = 0;
 };
 
-#endif // OPPONENT_H
+} // namespace ticktactoe
+
+#endif
