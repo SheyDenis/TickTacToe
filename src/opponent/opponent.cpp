@@ -1,14 +1,18 @@
 #include "opponent/opponent.h"
 
-Opponent::Opponent(QString name, TileButton::TileSymbol turn){
-	this->opponentName = name;
-	this->turn = turn;
+#include <utility>
+
+namespace ticktactoe {
+
+Opponent::Opponent(QString name, TileButton::TileSymbol turn)
+    : opponentName(std::move(name)), turn(turn) {}
+
+QString const& Opponent::getName() const {
+  return opponentName;
 }
 
-QString Opponent::getName(){
-	return this->opponentName;
+TileButton::TileSymbol Opponent::getTurn() const {
+  return turn;
 }
 
-TileButton::TileSymbol Opponent::getTurn(){
-	return this->turn;
-}
+} // namespace ticktactoe

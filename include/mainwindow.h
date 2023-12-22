@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWINDOW_H_
+#define MAINWINDOW_H_
 
 #ifndef DEBUG_FLAG
 #define DEBUG_FLAG 0
@@ -9,48 +9,48 @@
 #include <QDebug>
 #endif
 
-#include <QMainWindow>
-#include "tileboard.h"
-#include <QMenuBar>
-#include <QMenu>
-#include <QStatusBar>
-#include <QAction>
-#include <QDockWidget>
-#include "scoreboard.h"
 #include "opponent/opponent.h"
 #include "opponent/opponentrandom.h"
+#include "scoreboard.h"
+#include "tileboard.h"
+#include <QAction>
+#include <QDockWidget>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QStatusBar>
 
-class MainWindow : public QMainWindow{
-	Q_OBJECT
+namespace ticktactoe {
 
-public:
-	MainWindow(QWidget *parent = 0);
-	~MainWindow();
-
-protected:
+class MainWindow : public QMainWindow {
+  Q_OBJECT
 
 private:
-	TileButton::TileSymbol changeTurn();
-	TileBoard *board;
-	TileButton::TileSymbol turn;
-	ScoreBoard *scoreBoard;
-	bool opponentHuman;
-	QMenu *opponentMenu;
-	Opponent *opponent;
-	bool opponentWorking;
-
-
-public slots:
-	bool newGame();
+  TileBoard* board;
+  TileButton::TileSymbol turn;
+  ScoreBoard* scoreBoard;
+  bool opponentHuman;
+  QMenu* opponentMenu;
+  Opponent* opponent;
+  bool opponentWorking;
 
 private slots:
-//	void gameTie();
-	void gameOver(TileButton::TileSymbol winner);
-	void resetScore();
-	TileButton::TileSymbol newTurn();
-	bool setOpponentHuman();
-	bool setOpponentRandom();
-	bool nextTurn();
+  void gameOver(TileButton::TileSymbol winner);
+  void resetScore();
+  TileButton::TileSymbol newTurn();
+  bool setOpponentHuman();
+  bool setOpponentRandom();
+  bool nextTurn();
+  TileButton::TileSymbol changeTurn();
+
+public slots:
+  bool newGame();
+
+public:
+  explicit MainWindow(QWidget* parent = nullptr);
+  ~MainWindow() override = default;
 };
 
-#endif // MAINWINDOW_H
+} // namespace ticktactoe
+
+#endif

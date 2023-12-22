@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ticktactoe"
-version = "0.0.1"
+version = "0.1.0"
 description = ""
 authors = ["SheyDenis <denis.sheyer@gmail.com>"]
 readme = "README.md"

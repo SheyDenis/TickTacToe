@@ -1,163 +1,159 @@
 #include "mainwindow.h"
 #include "moc_mainwindow.cpp"
 
-MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent){
+namespace ticktactoe {
 
-//	this->menuBar()->addAction("New Game", this, SLOT(newGame()));
-	this->menuBar()->addAction("New Turn", this, SLOT(newTurn()));
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent), opponentHuman(false), opponent(nullptr), opponentWorking(false) {
 
-	this->opponentMenu = new QMenu("Opponent");
-	opponentMenu->addAction("Human", this, SLOT(setOpponentHuman()));
-	opponentMenu->addAction("Random", this, SLOT(setOpponentRandom()));
+  menuBar()->addAction("New Turn", this, SLOT(newTurn()));
 
-	foreach(QAction *qa, this->opponentMenu->actions()){
-		qa->setCheckable(true);
-	}
+  opponentMenu = new QMenu("Opponent"); // TODO - Replace raw pointer usage all over.
+  opponentMenu->addAction("Human", this, SLOT(setOpponentHuman()));
+  opponentMenu->addAction("Random", this, SLOT(setOpponentRandom()));
 
-	this->menuBar()->addMenu(opponentMenu);
+  foreach (QAction* qa, opponentMenu->actions()) {
+    qa->setCheckable(true);
+  }
 
-	this->menuBar()->addAction("Reset Score", this, SLOT(resetScore()));
+  menuBar()->addMenu(opponentMenu);
 
+  menuBar()->addAction("Reset Score", this, SLOT(resetScore()));
 
-	this->board = new TileBoard(this);
-	this->turn = this->board->getCurrentTurn();
-	setCentralWidget(board);
+  board = new TileBoard(this);
+  turn = board->getCurrentTurn();
+  setCentralWidget(board);
 
-	this->setMinimumSize(300,300);
+  setMinimumSize(300, 300);
 
-	QDockWidget *scoreWidget = new QDockWidget("Score:", this);
-	scoreWidget->setAllowedAreas(Qt::TopDockWidgetArea);
-	this->scoreBoard = new ScoreBoard(scoreWidget);
-	scoreWidget->setWidget(scoreBoard);
-	scoreWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
-	scoreWidget->setMaximumHeight(60);
-	scoreWidget->setMaximumWidth(300);
-	addDockWidget(Qt::TopDockWidgetArea, scoreWidget);
+  QDockWidget* scoreWidget = new QDockWidget("Score:", this);
+  scoreWidget->setAllowedAreas(Qt::TopDockWidgetArea);
+  scoreBoard = new ScoreBoard(scoreWidget);
+  scoreWidget->setWidget(scoreBoard);
+  scoreWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
+  scoreWidget->setMaximumHeight(60);
+  scoreWidget->setMaximumWidth(300);
+  addDockWidget(Qt::TopDockWidgetArea, scoreWidget);
 
-	connect(this->board, SIGNAL(gameOver(TileButton::TileSymbol)), this, SLOT(gameOver(TileButton::TileSymbol)));
-	connect(this->board, SIGNAL(nextTurn()), this, SLOT(nextTurn()));
-	this->setOpponentHuman();
-	this->board->toggleOClicks(true);
-
+  connect(board, SIGNAL(gameOver(TileButton::TileSymbol)), this, SLOT(gameOver(TileButton::TileSymbol)));
+  connect(board, SIGNAL(nextTurn()), this, SLOT(nextTurn()));
+  setOpponentHuman();
+  board->toggleOClicks(true);
 }
 
-MainWindow::~MainWindow(){
-
-}
-
-TileButton::TileSymbol MainWindow::changeTurn(){
-	switch (this->turn) {
-		case TileButton::TileSymbol::X:
-			this->turn = TileButton::TileSymbol::O;
-			break;
-		case TileButton::TileSymbol::O:
-			this->turn = TileButton::TileSymbol::X;
-			break;
-		default:
+TileButton::TileSymbol MainWindow::changeTurn() {
+  switch (turn) {
+    case TileButton::TileSymbol::X:
+      turn = TileButton::TileSymbol::O;
+      break;
+    case TileButton::TileSymbol::O:
+      turn = TileButton::TileSymbol::X;
+      break;
+    default:
 #if DEBUG_FLAG
-			qDebug() << "Current turn is set to neither X or O.";
+      qDebug() << "Current turn is set to neither X or O.";
 #endif
-			break;
-	}
+      break;
+  }
 
-	return this->turn;
+  return turn;
 }
 
-bool MainWindow::newGame(){
-	bool fail = this->board == nullptr;
+bool MainWindow::newGame() {
+  bool fail = board == nullptr;
 
-	if(!fail){
-		this->changeTurn();
-		this->board->toggleOClicks(this->opponentHuman);
-		this->resetScore();
-		fail = !this->board->resetBoard(this->turn);
-	}
+  if (!fail) {
+    changeTurn();
+    board->toggleOClicks(opponentHuman);
+    resetScore();
+    fail = !board->resetBoard(turn);
+  }
 
-	return !fail;
+  return !fail;
 }
 
-void MainWindow::gameOver(TileButton::TileSymbol winner){
-	this->scoreBoard->incrementScore(winner);
+void MainWindow::gameOver(TileButton::TileSymbol winner) {
+  scoreBoard->incrementScore(winner);
 }
 
-void MainWindow::resetScore(){
-	this->scoreBoard->resetScore();
+void MainWindow::resetScore() {
+  scoreBoard->resetScore();
 }
 
-TileButton::TileSymbol MainWindow::newTurn(){
-	TileButton::TileSymbol newTurn = this->changeTurn();
-	this->board->resetBoard(this->turn);
-	this->nextTurn();
-	return newTurn;
+TileButton::TileSymbol MainWindow::newTurn() {
+  TileButton::TileSymbol newTurn = changeTurn();
+  board->resetBoard(turn);
+  nextTurn();
+  return newTurn;
 }
 
-bool MainWindow::setOpponentHuman(){
-	this->opponentHuman = true;
-	this->board->toggleOClicks(opponentHuman);
-	this->opponentWorking = false;
+bool MainWindow::setOpponentHuman() {
+  opponentHuman = true;
+  board->toggleOClicks(opponentHuman);
+  opponentWorking = false;
 
-	QObject *sendingObject = sender();
-	foreach(QAction *qa, this->opponentMenu->actions()){
-		if(sendingObject == qa || qa->text().compare("Human") == 0){
-			qa->setChecked(true);
-		}else{
-			qa->setChecked(false);
-		}
-	}
+  QObject* sendingObject = sender();
+  foreach (QAction* qa, opponentMenu->actions()) {
+    if (sendingObject == qa || qa->text().compare("Human") == 0) {
+      qa->setChecked(true);
+    } else {
+      qa->setChecked(false);
+    }
+  }
 
 #if DEBUG_FLAG
-	qDebug() << "Opponent set Human.";
+  qDebug() << "Opponent set Human.";
 #endif
-	return true;
+  return true;
 }
 
-bool MainWindow::setOpponentRandom(){
-	this->opponentHuman = false;
-	this->board->toggleOClicks(opponentHuman);
-	this->opponentWorking = false;
+bool MainWindow::setOpponentRandom() {
+  opponentHuman = false;
+  board->toggleOClicks(opponentHuman);
+  opponentWorking = false;
 
-	QObject *sendingObject = sender();
-	foreach(QAction *qa, this->opponentMenu->actions()){
-		if(sendingObject == qa){
-			qa->setChecked(true);
-		}else{
-			qa->setChecked(false);
-		}
-	}
+  QObject* sendingObject = sender();
+  foreach (QAction* qa, opponentMenu->actions()) {
+    if (sendingObject == qa) {
+      qa->setChecked(true);
+    } else {
+      qa->setChecked(false);
+    }
+  }
 
-	this->opponent = new OpponentRandom("Random Opponenet", TileButton::TileSymbol::O);
+  opponent = new OpponentRandom("Random Opponent", TileButton::TileSymbol::O);
 
 #if DEBUG_FLAG
-	qDebug() << "Opponent set Random.";
+  qDebug() << "Opponent set Random.";
 #endif
 
-	if(this->turn == TileButton::TileSymbol::O){
-		nextTurn();
-	}
-	return true;
+  if (turn == TileButton::TileSymbol::O) {
+    nextTurn();
+  }
+  return true;
 }
 
-bool MainWindow::nextTurn(){
+bool MainWindow::nextTurn() {
 #if DEBUG_FLAG
-	qDebug() << "MainWindow nextTurn()";
+  qDebug() << "MainWindow nextTurn()";
 #endif
 
-	this->turn = this->board->getCurrentTurn();
-	if( this->board->getIsGameOver() || this->opponentHuman || this->turn == TileButton::TileSymbol::X || this->opponentWorking == true){
-		return true;
-	}
+  turn = board->getCurrentTurn();
+  if (board->getIsGameOver() || opponentHuman || turn == TileButton::TileSymbol::X || opponentWorking) {
+    return true;
+  }
 
-	this->opponentWorking = true;
-	TileButton::TileSymbol** currentState = this->board->getCurrentState();
-	TileButton::TilePosition selectedPosition = this->opponent->makeTurn(currentState);
+  opponentWorking = true;
+  TileButton::TileSymbol** currentState = board->getCurrentState();
+  TileButton::TilePosition selectedPosition = opponent->makeTurn(currentState);
 
-	this->board->tileSelected(selectedPosition);
-	for(int row = 0; row < NUM_OF_ROWS; row++){
-		delete currentState[row];
-	}
-	delete currentState;
+  board->tileSelected(selectedPosition);
+  for (int row = 0; row < NUM_OF_ROWS; ++row) {
+    delete currentState[row];
+  }
+  delete currentState;
 
-	this->opponentWorking = false;
-	return false;
+  opponentWorking = false;
+  return false;
 }
+} // namespace ticktactoe

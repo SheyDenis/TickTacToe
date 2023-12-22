@@ -1,38 +1,38 @@
-#ifndef SCOREBOARD_H
-#define SCOREBOARD_H
+#ifndef SCOREBOARD_H_
+#define SCOREBOARD_H_
 
 #if DEBUG_FLAG
 #include <QDebug>
 #endif
 
-#include <QWidget>
-#include <QBoxLayout>
-#include <QLabel>
 #include "tilebutton.h"
-#include <QString>
+#include <QBoxLayout>
 #include <QFont>
+#include <QLabel>
+#include <QString>
+#include <QWidget>
 
-class ScoreBoard : public QWidget{
-	Q_OBJECT
-public:
-	explicit ScoreBoard(QWidget *parent = nullptr);
-	void resetScore();
-	int getScore(TileButton::TileSymbol symbol);
-	int incrementScore(TileButton::TileSymbol symbol);
+namespace ticktactoe {
 
-protected:
-	void redrawScores();
+class ScoreBoard : public QWidget {
+  Q_OBJECT
 
 private:
-	QLabel *xScoreLbl;
-	QLabel *oScoreLbl;
-	int xScore = 0;
-	int oScore = 0;
+  QLabel* xScoreLbl;
+  QLabel* oScoreLbl;
+  int xScore = 0;
+  int oScore = 0;
 
-signals:
+protected:
+  void redrawScores();
 
-public slots:
+public:
+  explicit ScoreBoard(QWidget* parent = nullptr);
 
+  void resetScore();
+  int getScore(TileButton::TileSymbol symbol);
+  int incrementScore(TileButton::TileSymbol symbol);
 };
+} // namespace ticktactoe
 
-#endif // SCOREBOARD_H
+#endif

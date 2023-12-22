@@ -1,12 +1,12 @@
 #include "mainwindow.h"
-#include <QApplication>
 #include <cstdlib>
+#include <QApplication>
 
-int main(int argc, char *argv[]){
-    setenv("FONTCONFIG_PATH","/etc/fonts",0);
-	QApplication a(argc, argv);
-	MainWindow w;
-	w.show();
+int main(int argc, char* argv[]) {
+  setenv("FONTCONFIG_PATH", "/etc/fonts", 0);
+  QApplication a(argc, argv);
+  ticktactoe::MainWindow w;
+  w.show();
 
-	return a.exec();
+  return QApplication::exec();
 }
